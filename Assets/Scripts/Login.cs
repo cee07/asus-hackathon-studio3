@@ -17,12 +17,12 @@ public class Login : MonoBehaviour {
     [SerializeField]
     private GameObject roomListingPanel;
 
-	void Start () {
+    void Start() {
         AddListeners ();
-	}
+    }
 
     void OnDestroy() {
-        RemoveListeners ();   
+        RemoveListeners ();
     }
 
     void AddListeners() {
@@ -38,10 +38,13 @@ public class Login : MonoBehaviour {
             return;
         if (string.IsNullOrEmpty (password.text))
             return;
+        iTween.MoveTo (gameObject, iTween.Hash ("position", transform.position + (Vector3.left * 1000f), "time", 0.3f, "oncomplete", "OnCompleteAnimation",
+            "oncompletetarget", gameObject));
+    }
+
+    void OnCompleteAnimation() {
         roomListingPanel.SetActive (true);
         gameObject.SetActive (false);
     }
 
-
-    
 }
