@@ -1,26 +1,35 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class RoomListing : MonoBehaviour {
 
-    [SerializeField]
-    private List<Room> rooms = new List<Room> ();
+    private const string ROOM_TEXTURES_PATH = "Textures/Rooms";
 
-	// Use this for initialization
-	void Start () {
+    [SerializeField]
+    private Transform roomPanel;
+
+    private List<Room> rooms = new List<Room> ();
+    private List<Sprite> roomSprites = new List<Sprite> ();
+
+    void Start() {
         Init ();
         AddListeners ();
-	}
+    }
 
     void OnDestroy() {
         RemoveListeners ();
     }
 
     void Init() {
+        Sprite[] roomSpritesArray = (Sprite[]) Resources.LoadAll<Sprite>(ROOM_TEXTURES_PATH);
+        roomSprites = roomSpritesArray.ToList ();
+        rooms = roomPanel.GetComponentsInChildren<Room> ().ToList();
         for (int index = 0; index < rooms.Count; index++) {
             Room room = rooms[index];
             room.SetRoomText ("Room " + (index + 1).ToString ());
+            room.SetImage (roomSprites[index]);
         }
     }
 
@@ -41,6 +50,11 @@ public class RoomListing : MonoBehaviour {
     }
 
     void OnRoomClicked() {
+        iTween.MoveTo (gameObject, iTween.Hash ("position", transform.position + (Vector3.left * 1000f), "time", 0.3f, "oncomplete", "OnCompleteAnimation",
+           "oncompletetarget", gameObject));
+    }
+
+    void OnCompleteAnimation() {
         gameObject.SetActive (false);
     }
 }

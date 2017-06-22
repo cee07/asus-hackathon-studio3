@@ -10,6 +10,9 @@ public class Room : MonoBehaviour {
     [SerializeField]
     private Text roomText;
 
+    [SerializeField]
+    private Image roomImage;
+
     private Button buttonInstance;
 
 	void Start () {
@@ -38,5 +41,8 @@ public class Room : MonoBehaviour {
         roomText.text = text;
     }
 
+    public void SetImage(Sprite sprite) {
+        roomImage.sprite = sprite;
+    }
 
 }
