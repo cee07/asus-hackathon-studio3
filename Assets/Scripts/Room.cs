@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Room : MonoBehaviour {
 
-    public System.Action OnRoomClicked;
+    public System.Action<Sprite> OnRoomClicked;
 
     [SerializeField]
     private Text roomText;
@@ -34,7 +34,7 @@ public class Room : MonoBehaviour {
 
     void OnClickRoom() {
         if (OnRoomClicked != null)
-            OnRoomClicked ();
+            OnRoomClicked (roomImage.sprite);
     }
 
     public void SetRoomText(string text) {

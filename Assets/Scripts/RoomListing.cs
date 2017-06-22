@@ -10,8 +10,15 @@ public class RoomListing : MonoBehaviour {
     [SerializeField]
     private Transform roomPanel;
 
+    [SerializeField]
+    private RoomDetails roomDetails;
+
     private List<Room> rooms = new List<Room> ();
     private List<Sprite> roomSprites = new List<Sprite> ();
+
+    private Sprite currentRoomSprite;
+
+    private Vector3 defaultPosition;
 
     void Start() {
         Init ();
@@ -34,8 +41,9 @@ public class RoomListing : MonoBehaviour {
     }
 
     void OnEnable() {
+        defaultPosition = transform.position;
         foreach (Room room in rooms) {
-            iTween.ScaleFrom (room.gameObject, iTween.Hash ("time", 0.5f, "easetype", iTween.EaseType.spring, "scale", Vector3.zero));
+            iTween.ScaleFrom (room.gameObject, iTween.Hash ("time", 1f, "easetype", iTween.EaseType.spring, "scale", Vector3.zero));
         }
     }
 
@@ -49,12 +57,15 @@ public class RoomListing : MonoBehaviour {
             room.OnRoomClicked -= OnRoomClicked;
     }
 
-    void OnRoomClicked() {
+    void OnRoomClicked(Sprite sprite) {
         iTween.MoveTo (gameObject, iTween.Hash ("position", transform.position + (Vector3.left * 1000f), "time", 0.3f, "oncomplete", "OnCompleteAnimation",
            "oncompletetarget", gameObject));
+        currentRoomSprite = sprite;
     }
 
     void OnCompleteAnimation() {
+        roomDetails.ShowDetails (currentRoomSprite);
+        transform.position = defaultPosition;
         gameObject.SetActive (false);
     }
 }
