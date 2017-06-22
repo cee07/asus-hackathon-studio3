@@ -35,7 +35,7 @@ public class RoomListing : MonoBehaviour {
         rooms = roomPanel.GetComponentsInChildren<Room> ().ToList();
         for (int index = 0; index < rooms.Count; index++) {
             Room room = rooms[index];
-            room.SetRoomText ("Room " + (index + 1).ToString ());
+            room.SetRoomText (index + 1);
             room.SetImage (roomSprites[index]);
         }
     }

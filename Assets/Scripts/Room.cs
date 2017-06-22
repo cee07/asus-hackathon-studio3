@@ -6,6 +6,10 @@ using UnityEngine.UI;
 public class Room : MonoBehaviour {
 
     public System.Action<Sprite> OnRoomClicked;
+    public System.Action<int> OnToggle;
+
+    [SerializeField]
+    private GameObject panel;
 
     [SerializeField]
     private Text roomText;
@@ -13,10 +17,12 @@ public class Room : MonoBehaviour {
     [SerializeField]
     private Image roomImage;
 
-    private Button buttonInstance;
+    private Toggle toggleInstance;
+
+    private int index;
 
 	void Start () {
-        buttonInstance = GetComponent<Button> ();
+        toggleInstance = GetComponent<Toggle> ();
         AddListeners ();
 	}
 
@@ -25,24 +31,37 @@ public class Room : MonoBehaviour {
     }
 
     void AddListeners() {
-        buttonInstance.onClick.AddListener (OnClickRoom);
+        toggleInstance.onValueChanged.AddListener (OnClickRoom);
     }
 
     void RemoveListeners() {
-        buttonInstance.onClick.RemoveListener (OnClickRoom);
+        toggleInstance.onValueChanged.RemoveListener (OnClickRoom);
     }
 
-    void OnClickRoom() {
+    void OnClickRoom(bool toggled) {
+        if (toggled) {
+            if (OnToggle != null)
+                OnToggle (index);
+        }
         if (OnRoomClicked != null)
             OnRoomClicked (roomImage.sprite);
     }
 
-    public void SetRoomText(string text) {
-        roomText.text = text;
+    public void SetRoomText(int index) {
+        this.index = index - 1;
+        roomText.text = "Room " + index.ToString ();
     }
 
     public void SetImage(Sprite sprite) {
         roomImage.sprite = sprite;
+    }
+
+    public void Show() {
+        panel.SetActive (true);
+    }
+
+    public void Hide() {
+        panel.SetActive (false);
     }
 
 }

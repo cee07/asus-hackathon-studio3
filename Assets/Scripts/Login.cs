@@ -17,6 +17,9 @@ public class Login : MonoBehaviour {
     [SerializeField]
     private GameObject roomListingPanel;
 
+    [SerializeField]
+    private GameObject roomGameObject;
+
     void Start() {
         AddListeners ();
     }
@@ -45,6 +48,7 @@ public class Login : MonoBehaviour {
     void OnCompleteAnimation() {
         roomListingPanel.SetActive (true);
         gameObject.SetActive (false);
+        roomGameObject.SetActive (false);
     }
 
 }

@@ -25,6 +25,15 @@ public class RoomDetails : MonoBehaviour {
 
     private Vector3 defaultPosition;
 
+    [SerializeField]
+    private GameObject cityGameObject;
+
+    [SerializeField]
+    private RoomSelection roomSelection;
+
+    [SerializeField]
+    private GameObject roomObject;
+    
 	void Start () {
         defaultPosition = panel.transform.position;
         AddListeners ();	
@@ -68,7 +77,9 @@ public class RoomDetails : MonoBehaviour {
     void OnCompleteAnimation() {
         panel.transform.position = defaultPosition;
         panel.SetActive (false);
-        roomListing.gameObject.SetActive (true);
+        cityGameObject.SetActive (true);
+        roomSelection.ShowSelectionPanel ();
+        roomObject.SetActive (false);
     }
 
 }
