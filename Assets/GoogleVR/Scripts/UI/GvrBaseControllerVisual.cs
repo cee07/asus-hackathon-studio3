@@ -56,7 +56,7 @@ public abstract class GvrBaseControllerVisual : MonoBehaviour {
 
   private void OnArmModelUpdate() {
     OnVisualUpdate();
-    AlphaUpdate();
+    //AlphaUpdate();
   }
 
   private void AlphaUpdate() {
