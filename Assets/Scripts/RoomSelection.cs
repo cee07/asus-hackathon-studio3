@@ -85,10 +85,12 @@ public class RoomSelection : MonoBehaviour {
     }
 
     void OnClickView() {
-        roomDetails.ShowDetails (currentSprite);
-        roomGameObject.SetActive (true);
-        cityGO.SetActive (false);
-        selectionPanel.SetActive (false);
+        if (currentSprite != null) {
+            roomDetails.ShowDetails (currentSprite);
+            roomGameObject.SetActive (true);
+            cityGO.SetActive (false);
+            selectionPanel.SetActive (false);
+        }
     }
 
     void OnToggledRoom(int index) {

@@ -15,7 +15,7 @@ public class Login : MonoBehaviour {
     private Button loginButton;
 
     [SerializeField]
-    private GameObject roomListingPanel;
+    private RoomSelection roomListingPanel;
 
     [SerializeField]
     private GameObject roomGameObject;
@@ -46,7 +46,7 @@ public class Login : MonoBehaviour {
     }
 
     void OnCompleteAnimation() {
-        roomListingPanel.SetActive (true);
+        roomListingPanel.ShowSelectionPanel ();
         gameObject.SetActive (false);
         roomGameObject.SetActive (false);
     }
