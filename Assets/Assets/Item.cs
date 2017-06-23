@@ -5,6 +5,7 @@ using UnityEngine;
 public class Item : MonoBehaviour {
 
 	public bool floorItem;
+	public int turnIndex = 0;
 
 	// Use this for initialization
 	void Start () {
