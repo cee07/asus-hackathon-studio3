@@ -6,9 +6,9 @@ using UnityEngine.VR;
 public class Blocker : MonoBehaviour {
 
 	void Start () {
-        if (VRSettings.loadedDeviceName == "daydream")
+        if (PlayerPrefs.HasKey (StringConstants.DAYDREAM_KEY)) {
             UnityEngine.SceneManagement.SceneManager.LoadScene (2);
-        else
+        } else
             UnityEngine.SceneManagement.SceneManager.LoadScene (1);
     }
 
@@ -25,4 +25,8 @@ public class Blocker : MonoBehaviour {
     void disableVr() {
         StartCoroutine (LoadDevice ("", false));
     }
+}
+
+public class StringConstants {
+    public const string DAYDREAM_KEY = "daydream";
 }
