@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.VR;
 
 public class RoomDetails : MonoBehaviour {
 
@@ -62,7 +63,7 @@ public class RoomDetails : MonoBehaviour {
     }
 
     void OnClickViewVirtualReality() {
-
+        enableVr ();
     }
 
     void OnClickBook() {
@@ -82,4 +83,18 @@ public class RoomDetails : MonoBehaviour {
         roomObject.SetActive (false);
     }
 
+    IEnumerator LoadDevice(string newDevice, bool enable) {
+        VRSettings.LoadDeviceByName (newDevice);
+        yield return null;
+        VRSettings.enabled = enable;
+        // AJ dito mo nalang lagay yung scene name na ilload mo haha
+    }
+
+    void enableVr() {
+        StartCoroutine (LoadDevice ("daydream", true));
+    }
+
+    void disableVr() {
+        StartCoroutine (LoadDevice ("", false));
+    }
 }

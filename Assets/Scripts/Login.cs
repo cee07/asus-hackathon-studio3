@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.VR;
 
 public class Login : MonoBehaviour {
 
@@ -19,6 +20,10 @@ public class Login : MonoBehaviour {
 
     [SerializeField]
     private GameObject roomGameObject;
+
+    void Awake() {
+        disableVr ();
+    }
 
     void Start() {
         AddListeners ();
@@ -49,6 +54,20 @@ public class Login : MonoBehaviour {
         roomListingPanel.ShowSelectionPanel ();
         gameObject.SetActive (false);
         roomGameObject.SetActive (false);
+    }
+
+    IEnumerator LoadDevice(string newDevice, bool enable) {
+        VRSettings.LoadDeviceByName (newDevice);
+        yield return null;
+        VRSettings.enabled = enable;
+    }
+
+    void enableVr() {
+        StartCoroutine (LoadDevice ("daydream", true));
+    }
+
+    void disableVr() {
+        StartCoroutine (LoadDevice ("", false));
     }
 
 }
