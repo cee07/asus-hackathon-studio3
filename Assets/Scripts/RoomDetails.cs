@@ -88,6 +88,7 @@ public class RoomDetails : MonoBehaviour {
         yield return null;
         VRSettings.enabled = enable;
         // AJ dito mo nalang lagay yung scene name na ilload mo haha
+        UnityEngine.SceneManagement.SceneManager.LoadScene(1);
     }
 
     void enableVr() {
