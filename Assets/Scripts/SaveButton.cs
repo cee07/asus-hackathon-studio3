@@ -59,6 +59,7 @@ public class SaveButton : MonoBehaviour {
 
     public void SaveRoom()
     {
-
+        GameObject.Find("ItemSelectionMenuCanvas").SetActive(false);
+        GameObject.Find("VrPopupMsgCanvas").GetComponent<VrPopupMsg>().ShowMsg("ROOM SETUP SAVED");
     }
 }

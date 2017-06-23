@@ -7,6 +7,7 @@ public class Blocker : MonoBehaviour {
 
 	void Start () {
         if (PlayerPrefs.HasKey (StringConstants.DAYDREAM_KEY)) {
+            PlayerPrefs.DeleteKey(StringConstants.DAYDREAM_KEY);
             UnityEngine.SceneManagement.SceneManager.LoadScene (2);
         } else
             UnityEngine.SceneManagement.SceneManager.LoadScene (1);

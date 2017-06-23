@@ -62,5 +62,7 @@ public class ItemUI : MonoBehaviour {
     public void InstanciateItem()
     {
         Debug.LogError("InstanciateItem");
+        Camera.main.GetComponent<ItemSpawner>().InstantiateItem(itemPrefab);
+        GameObject.Find("ItemSelectionMenuCanvas").SetActive(false);
     }
 }

@@ -34,7 +34,7 @@ public class RoomGvrController : MonoBehaviour {
 
         if (GvrController.State == GvrConnectionState.Connected)
         {
-            laserPointer.maxLaserDistance = 2f;
+            laserPointer.maxLaserDistance = 2.5f;
         }
     }
 }

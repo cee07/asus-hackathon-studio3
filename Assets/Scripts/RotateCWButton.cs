@@ -6,20 +6,18 @@ public class RotateCWButton : InterractableButton {
 
     public Axis rotateToAxis;
 
+    private ItemMenu itemMenu;
+
+    public override void Start()
+    {
+        base.Start();
+
+        itemMenu = GetComponentInParent<ItemMenu>();
+    }
+
     public void RotateClockwise()
     {
         Debug.LogError("RotateClockwise");
-        if (rotateToAxis == Axis.XAxis)
-        {
-            
-        }
-        else if (rotateToAxis == Axis.YAxis)
-        {
-
-        }
-        else if (rotateToAxis == Axis.ZAxis)
-        {
-
-        }
+        itemMenu.RotateClockwise(rotateToAxis);
     }
 }

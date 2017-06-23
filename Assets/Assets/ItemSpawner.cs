@@ -3,19 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemSpawner : MonoBehaviour {
-
+    
 	public List<GameObject> itemPool =  new List<GameObject>();
 	private int mask;
 
     private GvrLaserPointer laserPointer;
+    private Item instantiatedItem;
 
-	// Use this for initialization
-	void Start () {
+    private Color32 validPlaceColor;
+    private Color32 invalidPlaceColor;
+    private Color32 normalLaserColor;
+
+    // Use this for initialization
+    void Start () {
         laserPointer = GameObject.Find("Player").transform.Find("GvrControllerPointer/Laser").GetComponent<GvrLaserPointer>();
+        mask = 1 << 8 | 1 << 9 | 1 << 10;
+
+        validPlaceColor = new Color32(0, 255, 0, 240);
+        invalidPlaceColor = new Color32(255, 0, 0, 240);
+        normalLaserColor = new Color32(255, 255, 255, 128);
     }
 	
 	// Update is called once per frame
 	void Update () {
+        /*
 		Debug.DrawRay(transform.position, transform.forward, Color.green);
 
 		if (Input.GetKeyDown (KeyCode.A)) {
@@ -65,8 +76,86 @@ public class ItemSpawner : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.Alpha3)) {
 			TurnItemCounterClockwise (2);
 		}
+        */
+        if (instantiatedItem != null) {
+            RaycastHit hit;
+            
+            if (instantiatedItem.floorItem)
+            {
+                // Floor Item
+                if (Physics.Raycast(laserPointer.transform.position, laserPointer.transform.forward, out hit, Mathf.Infinity, mask))
+                {
+                    if (hit.transform.gameObject.layer == 10 || hit.transform.gameObject.layer == 9)
+                    {
+                        Debug.LogError("OBJECT!");
+                        laserPointer.laserColor = invalidPlaceColor;
 
+                        if (GvrController.ClickButtonDown)
+                        {
+                            GameObject.Find("VrPopupMsgCanvas").GetComponent<VrPopupMsg>().ShowMsg("INVALID POSITION");
+                        }
+                    }
+                    else
+                    {
+                        laserPointer.laserColor = validPlaceColor;
+
+                        if (GvrController.ClickButtonDown) {
+                            instantiatedItem.GetComponent<Animator>().SetTrigger("Reset");
+                            //itemPool [itemIndex].GetComponent<Rigidbody> ().isKinematic = false;
+                            instantiatedItem.transform.position = hit.point;
+                            instantiatedItem.gameObject.SetActive(true);
+                            //itemPool [itemIndex].GetComponent<Animator> ().enabled = true;
+                            instantiatedItem.GetComponent<Animator>().SetTrigger("PopUp");
+                            //StartCoroutine(SetKinematicCoroutine(itemPool[itemIndex].GetComponent<Rigidbody>()));
+
+                            instantiatedItem = null;
+                            laserPointer.laserColor = normalLaserColor;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                // Wall Item
+                if (Physics.Raycast(laserPointer.transform.position, laserPointer.transform.forward, out hit, Mathf.Infinity, mask))
+                {
+                    if (hit.transform.gameObject.layer == 10 || hit.transform.gameObject.layer == 8)
+                    {
+                        Debug.LogError("OBJECT!");
+                        laserPointer.laserColor = invalidPlaceColor;
+
+                        if (GvrController.ClickButtonDown)
+                        {
+                            GameObject.Find("VrPopupMsgCanvas").GetComponent<VrPopupMsg>().ShowMsg("INVALID POSITION");
+                        }
+                    }
+                    else
+                    {
+                        laserPointer.laserColor = validPlaceColor;
+
+                        if (GvrController.ClickButtonDown)
+                        {
+                            instantiatedItem.GetComponent<Animator>().SetTrigger("Reset");
+                            instantiatedItem.transform.position = hit.point;
+                            instantiatedItem.transform.rotation = hit.transform.rotation;
+                            instantiatedItem.gameObject.SetActive(true);
+                            //itemPool [itemIndex].GetComponent<Animator> ().enabled = true;
+                            instantiatedItem.GetComponent<Animator>().SetTrigger("PopUp");
+
+                            instantiatedItem = null;
+                            laserPointer.laserColor = normalLaserColor;
+                        }
+                    }
+                }
+            }
+        }
 	}
+
+    public void InstantiateItem(GameObject itemPrefab) {
+        GameObject go = Instantiate<GameObject>(itemPrefab);
+        instantiatedItem = go.GetComponent<Item>();
+        instantiatedItem.transform.position = new Vector3(100, 100, 100);
+    }
 
 	public void SpawnItem(int itemIndex) {
 		//items [itemIndex].transform.position;

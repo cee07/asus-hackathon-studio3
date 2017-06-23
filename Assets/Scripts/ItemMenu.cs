@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class ItemMenu : MonoBehaviour {
 
+    private Item mainObject;
+
 	void Start()
     {
+        mainObject = GetComponentInParent<Item>();
+
         gameObject.SetActive(false);
     }
 
@@ -35,7 +39,52 @@ public class ItemMenu : MonoBehaviour {
     public void Remove()
     {
         Debug.LogError("Remove");
+        Destroy(mainObject.gameObject);
     }
 
-    
+    public void RotateClockwise(Axis axis)
+    {
+        if (axis == Axis.XAxis)
+        {
+            
+        }
+        else if (axis == Axis.YAxis)
+        {
+            int tIndex = mainObject.turnIndex;
+            mainObject.GetComponent<Animator>().SetInteger("TurnIndex", tIndex);
+            mainObject.GetComponent<Animator>().SetTrigger("TurnClockwise");
+            tIndex++;
+            if (tIndex == 4)
+                tIndex = 0;
+            mainObject.GetComponent<Item>().turnIndex = tIndex;
+        }
+        else if (axis == Axis.ZAxis)
+        {
+            mainObject.transform.eulerAngles = new Vector3(mainObject.transform.eulerAngles.x, mainObject.transform.eulerAngles.y, mainObject.transform.eulerAngles.z - 90);
+            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, transform.localEulerAngles.z + 270);
+        }
+    }
+
+    public void RotateCounterClockwise(Axis axis)
+    {
+        if (axis == Axis.XAxis)
+        {
+            
+        }
+        else if (axis == Axis.YAxis)
+        {
+            int tIndex = mainObject.turnIndex;
+            mainObject.GetComponent<Animator>().SetInteger("TurnIndex", tIndex);
+            mainObject.GetComponent<Animator>().SetTrigger("TurnCounterClockwise");
+            tIndex--;
+            if (tIndex == -1)
+                tIndex = 3;
+            mainObject.turnIndex = tIndex;
+        }
+        else if (axis == Axis.ZAxis)
+        {
+            mainObject.transform.eulerAngles = new Vector3(mainObject.transform.eulerAngles.x, mainObject.transform.eulerAngles.y, mainObject.transform.eulerAngles.z + 90);
+            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, transform.localEulerAngles.z - 270);
+        }
+    }
 }
