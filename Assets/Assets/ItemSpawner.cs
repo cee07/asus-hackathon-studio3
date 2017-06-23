@@ -6,10 +6,13 @@ public class ItemSpawner : MonoBehaviour {
 
 	public List<GameObject> itemPool =  new List<GameObject>();
 	private int mask;
+
+    private GvrLaserPointer laserPointer;
+
 	// Use this for initialization
 	void Start () {
-		
-	}
+        laserPointer = GameObject.Find("Player").transform.Find("GvrControllerPointer/Laser").GetComponent<GvrLaserPointer>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -74,7 +77,7 @@ public class ItemSpawner : MonoBehaviour {
 
 		if (itemPool [itemIndex].GetComponent<Item>().floorItem) {
 			// Floor Item
-			if (Physics.Raycast (transform.position, transform.forward, out hit, Mathf.Infinity, mask)) {
+			if (Physics.Raycast (laserPointer.transform.position, laserPointer.transform.forward, out hit, Mathf.Infinity, mask)) {
 				if (hit.transform.gameObject.layer == 10 || hit.transform.gameObject.layer == 9) {
 					Debug.LogError ("OBJECT!");
 				} else {
@@ -88,7 +91,7 @@ public class ItemSpawner : MonoBehaviour {
 			}
 		} else {
 			// Wall Item
-			if (Physics.Raycast (transform.position, transform.forward, out hit, Mathf.Infinity, mask)) {
+			if (Physics.Raycast (laserPointer.transform.position, laserPointer.transform.forward, out hit, Mathf.Infinity, mask)) {
 				if (hit.transform.gameObject.layer == 10 || hit.transform.gameObject.layer == 8) {
 					Debug.LogError ("OBJECT!");
 				} else {
