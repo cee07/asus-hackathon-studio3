@@ -54,7 +54,7 @@ public class GvrSwipeDetector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Halooo");
+        //Debug.Log("Halooo");
         //var device = SteamVR_Controller.Input((int)trackedObj.index);
         // Touch down, possible chance for a swipe
         //if ((int)trackedObj.index != -1 && device.GetTouchDown(Valve.VR.EVRButtonId.k_EButton_Axis0))
@@ -74,7 +74,7 @@ public class GvrSwipeDetector : MonoBehaviour
             trackingSwipe = false;
             trackingSwipe = true;
             checkSwipe = true;
-            Debug.Log("Tracking Finish");
+            //Debug.Log("Tracking Finish");
         }
         else if (trackingSwipe)
         {
@@ -96,7 +96,7 @@ public class GvrSwipeDetector : MonoBehaviour
             Vector2 swipeVector = endPosition - mStartPosition;
 
             float velocity = swipeVector.magnitude / deltaTime;
-            Debug.Log(velocity);
+            //Debug.Log(velocity);
             if (velocity > mMinVelocity &&
                 swipeVector.magnitude > mMinSwipeDist)
             {

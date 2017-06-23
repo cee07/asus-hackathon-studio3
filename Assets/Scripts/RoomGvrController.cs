@@ -10,7 +10,7 @@ public class RoomGvrController : MonoBehaviour {
 
     private void Awake()
     {
-        itemSelection = GameObject.Find("ItemSelection").GetComponent<ItemSelection>();
+        itemSelection = GameObject.Find("ItemSelectionMenuCanvas").GetComponent<ItemSelection>();
     }
 
     private void Start()
