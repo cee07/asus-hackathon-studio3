@@ -87,8 +87,9 @@ public class RoomDetails : MonoBehaviour {
         VRSettings.LoadDeviceByName (newDevice);
         yield return null;
         VRSettings.enabled = enable;
-        // AJ dito mo nalang lagay yung scene name na ilload mo haha
-        UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+        PlayerPrefs.SetString (StringConstants.DAYDREAM_KEY, "d");
+        PlayerPrefs.Save ();
+        UnityEngine.SceneManagement.SceneManager.LoadScene(2);
     }
 
     void enableVr() {
