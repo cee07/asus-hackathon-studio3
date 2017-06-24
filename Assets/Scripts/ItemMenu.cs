@@ -34,6 +34,7 @@ public class ItemMenu : MonoBehaviour {
     public void Move()
     {
         Debug.LogError("Move");
+        Camera.main.GetComponent<ItemSpawner>().SetItem(mainObject);
     }
 
     public void Remove()

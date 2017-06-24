@@ -151,6 +151,10 @@ public class ItemSpawner : MonoBehaviour {
         }
 	}
 
+    public void SetItem(Item item) {
+        instantiatedItem = item;
+    }
+
     public void InstantiateItem(GameObject itemPrefab) {
         GameObject go = Instantiate<GameObject>(itemPrefab);
         instantiatedItem = go.GetComponent<Item>();
