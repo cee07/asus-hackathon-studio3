@@ -159,6 +159,7 @@ public class ItemSpawner : MonoBehaviour {
         GameObject go = Instantiate<GameObject>(itemPrefab);
         instantiatedItem = go.GetComponent<Item>();
         instantiatedItem.transform.position = new Vector3(100, 100, 100);
+        GameObject.Find("VrPopupMsgCanvas").GetComponent<VrPopupMsg>().ShowMsg("PLACE " + instantiatedItem.name.Replace("(Clone)", "").ToUpper() + " ON ROOM");
     }
 
 	public void SpawnItem(int itemIndex) {
